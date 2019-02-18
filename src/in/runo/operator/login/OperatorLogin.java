@@ -5,12 +5,12 @@ import in.runo.runoweb.MainTestCase;
 
 public class OperatorLogin extends MainTestCase {
 
-	public void operatorLogin() throws InterruptedException {
+	public static void operatorLogin() throws InterruptedException {
 
-		driver.manage().window().maximize();
-		driver.get("http://13.126.72.115:4200/");
+		
+		Thread.sleep(2000);
 
-		driver.findElement(By.xpath("//div[@id='mat-tab-label-0-1']")).click();
+		driver.findElement(By.xpath("//div[@id='mat-tab-label-0-1' and @ng-reflect-disabled='false']")).click();
 
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//input[@placeholder='Mobile Number']")).sendKeys("8830175062");
@@ -18,7 +18,7 @@ public class OperatorLogin extends MainTestCase {
 
 		driver.findElement(By.xpath("//input[@value='Login']")).click();
 		
-		System.out.println(" Login Successfully !! ");
+		System.out.println(" Operator Login Successfully !! ");
 
 	}
 

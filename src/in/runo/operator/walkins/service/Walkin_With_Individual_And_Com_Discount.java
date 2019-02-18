@@ -1,45 +1,65 @@
 package in.runo.operator.walkins.service;
 
+import java.io.IOException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Individual_Discount {
+public class Walkin_With_Individual_And_Com_Discount extends Walkin_With_Individual_Discount {
 
-	public double twoDigitRounding(double num) {
-		return Math.round(num * 100) / 100.0;
-	}
+	public static WebElement addCommonDiscount;
+	public static WebElement enterCommonDiscount;
+	public static WebElement applyCommonDiscount;
+	public static double actualCommonDiscount;
 
-	public void createWalkins_With_Individual_And_Common_Discount() throws InterruptedException {
+	public void createWalkinsWithIndividualAndCommonDiscount() throws InterruptedException, IOException {
 
-		Thread.sleep(5000);
+		wait("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']");
 
 		driver.findElement(By.xpath("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']"))
 				.sendKeys("9354154121");
 
-		Thread.sleep(3000);
-
 		// Handling noSuchElementException for existing customer
 		try {
 
+			wait("//span[@class='search-result-number']");
 			if (driver.findElement(By.xpath("//span[@class='search-result-number']")) != null) {
 				driver.findElement(By.xpath("//span[@class='search-result-number']")).click();
 				System.out.println(" customer is  existing customer");
 			}
 		} catch (Exception c) {
+
+			wait("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']");
 			driver.findElement(
 					By.xpath("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']"))
-					.sendKeys("Walkin for CommonDiscount");
-			driver.findElement(By.xpath("//div[text()='Male']")).click();
+					.sendKeys("Web Automation For IndDiscount");
+			driver.findElement(By.xpath("//input[@ng-reflect-name='email']")).sendKeys("automation@gmail.com");
+
+			WebElement selectDob = driver.findElement(By.xpath("//input[@ng-reflect-name='dob']"));
+
+			selectDob.click();
+
+			driver.findElement(By.xpath("//button[@class='previous']")).click();
+
+			driver.findElement(By.xpath("//span[text()='15']")).click();
+
+			driver.findElement(By.xpath("//div[text()='Others']")).click();
+
+			driver.findElement(By.xpath("//input[@ng-reflect-name='locality']"))
+					.sendKeys("Sr No: 22/2, 2nd Floor Near Petrol Pump Bidar");
+			driver.findElement(By.xpath("//input[@ng-reflect-name='city']")).sendKeys("Bidar");
+			driver.findElement(By.xpath("//input[@ng-reflect-name='pincode']")).sendKeys("410047");
+			driver.findElement(By.xpath("//input[@ng-reflect-name='notes']")).sendKeys(" He is a regular customer ");
+
 		}
 
 		driver.findElement(By.xpath("//div[@class='ng-select-container']")).click();
-		driver.findElement(By.xpath("//span[text()='Full Legs  ( Bleach ) ']")).click();
+		driver.findElement(By.xpath("//span[text()='Ironing (Long Hair)  ( HAIR CUT ) ']")).click();
 		driver.findElement(By.xpath("//select[@ng-reflect-name='employee']")).click();
 		driver.findElement(By.xpath("//select[@ng-reflect-name='employee']")).click();
 
-		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[text()=' Automation 8 ']")).click();
-		driver.findElement(By.xpath("//input[@maxlength='2']")).sendKeys("13");
+		wait("//*[text()=' Automation 2 ']");
+		driver.findElement(By.xpath("//*[text()=' Automation 2 ']")).click();
+		driver.findElement(By.xpath("//input[@maxlength='2']")).sendKeys("35");
 
 		driver.findElement(By.xpath("//button[@class='addSummary']")).click();
 
@@ -47,12 +67,14 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 
 		if (billSummaryTitle.equals("SUMMARY")) {
 
-			System.out.println(" Congratulation !! Bill summary text has matched with requiremnt");
+			System.out.println(" Test Case Passed !! Bill summary text has matched with requiremnt");
 
 		} else
 
 		{
 			System.out.println(" Test Case Failed !! Bill summary page title has not matched with requirement");
+
+			takeScreenshot("SummaryPageTitle.png");
 		}
 
 		// Validating category name for selected service
@@ -61,23 +83,26 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 
 		if (categoryName1.equals("Bleach")) {
 
-			System.out.println(" Congratulation !! Category name of selected services is correct in summary page");
+			System.out.println(" Test Case Passed !! Category name of selected services is correct in summary page");
+			takeScreenshot("CategoryNameIssue.png");
 
 		} else {
 
 			System.out.println(
 					" Test Case Failed !! The category name of selected services is not correct as per the requirement");
+			takeScreenshot("SelectedServiceIssue.png");
 		}
 
 		selectedEmployee1 = driver
 				.findElement(By.xpath("//span[@class='summaryBox__service__employeeName medium ng-star-inserted']"))
 				.getText();
 
-		if (selectedEmployee1.equals("Employee : Automation 8")) {
-			System.out.println(" Congratulation !! selected employee has taken successfully in summary page");
+		if (selectedEmployee1.equals("Employee : Automation 2")) {
+			System.out.println(" Test Case Passed !! selected employee has taken successfully in summary page");
 
 		} else {
 			System.out.println(" Test Case Failed !! Selected employee is not correct");
+			takeScreenshot("SelectedEmployeeIssue.png");
 
 		}
 
@@ -90,13 +115,10 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 		priceOfSelectedService1 = Integer.parseInt(getPriceOfSelectedService1.trim().split(" ")[0]);
 		System.out.println(" price is :" + priceOfSelectedService1);
 
-		Thread.sleep(3000);
+		wait("//input[@maxlength='2']");
 
 		String getProvidedDiscountInPercent = driver.findElement(By.xpath("//input[@maxlength='2']"))
 				.getAttribute("value");
-		Thread.sleep(3000);
-
-		System.out.println(" value is :: " + getProvidedDiscountInPercent);
 
 		getActualProvidedDiscount = Integer.parseInt(getProvidedDiscountInPercent);
 
@@ -106,20 +128,23 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 
 		actualIndividualDiscount1 = Integer.parseInt(getActualDiscount.split(" ")[0]);
 
-		double expectedDiscount = (priceOfSelectedService1 * getActualProvidedDiscount) / 100;
+		double expIndidualDiscount = (priceOfSelectedService1 * getActualProvidedDiscount) / 100;
 
-		if (actualIndividualDiscount1 == expectedDiscount) {
+		if (actualIndividualDiscount1 == expIndidualDiscount) {
 
-			System.out.println(" Congratulation !! Individual Discount amount has taken correctly in summary page");
+			System.out.println(" Test Case Passed !! Individual Discount amount has taken correctly in summary page");
 
 			String getGstAmount = driver.findElement(By.xpath("//span[@class='summaryBox__GST__money ']")).getText();
 			double actualGstAmt = Double.valueOf(getGstAmount.trim().split(" ")[0]);
-			System.out.println("**** " + getGstAmount.length() + " value is :" + actualGstAmt);
 
-			double expectedGSTAmt = twoDigitRounding((priceOfSelectedService1 - expectedDiscount) * 0.18);
+			double expectedGSTAmt = twoDigitRounding((priceOfSelectedService1 - expIndidualDiscount) * 0.18);
+
+			System.out
+					.println(" service price : " + priceOfSelectedService1 + " and discount is : " + expectedDiscount);
 
 			if (actualGstAmt == expectedGSTAmt) {
-				System.out.println(" Congratulations !! GST amount is correct");
+				System.out.println(" Test Case Passed !!  As GST amount is matched with expected GST, that is :"
+						+ actualGstAmt + " = " + expectedGSTAmt);
 
 				String getActualPayable = driver.findElement(By.xpath("//span[@class='summaryBox__grandTotal__value']"))
 						.getText();
@@ -128,13 +153,13 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 
 				System.out.println(" text is +" + getActualPayable + " value is :" + actualAmountPayable);
 
-				double expectedSubTotal = priceOfSelectedService1 - expectedDiscount;
+				double expectedSubTotal = priceOfSelectedService1 - expIndidualDiscount;
 
 				double expectedTotalPayable = expectedSubTotal + expectedGSTAmt;
 
 				if (actualAmountPayable == expectedTotalPayable) {
 
-					System.out.println(" Congratulation !! Total Payable amount is correct ");
+					System.out.println(" Test Case Passed !! Total Payable amount is correct ");
 
 					String getAmountPaid = driver
 							.findElement(By.xpath("//span[@class='summaryBox__amountPaid__value']")).getText();
@@ -146,9 +171,9 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 
 					double expectedAmountPaid = expectedTotalPayable;
 
-					if (expectedAmountPaid == expectedTotalPayable) {
+					if (actualAmountPaid == expectedAmountPaid) {
 
-						System.out.println(" Congratulation !! Amount Paid has taken correctly");
+						System.out.println(" Test Case Passed !! Amount Paid has taken correctly");
 
 						String getBalanceValue = driver
 								.findElement(By.xpath("//span[@class='summaryBox__balance__value']")).getText();
@@ -157,7 +182,7 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 						double expectedBalance = expectedTotalPayable - expectedAmountPaid;
 
 						if (actualBalanceValue == expectedBalance) {
-							System.out.println(" Congratulation !! Balance amount is correct in summary page");
+							System.out.println(" Test Case Passed !! Balance amount is correct in summary page");
 
 							String getFullPaidAmount = driver
 									.findElement(By.xpath("//input[@min='0' and @ng-reflect-is-disabled='false']"))
@@ -169,11 +194,11 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 
 							addCommonDiscount.click();
 
-							WebElement enterCommonDiscount = driver.findElement(By.xpath("//input[@placeholder='%']"));
+							enterCommonDiscount = driver.findElement(By.xpath("//input[@placeholder='%']"));
 
-							enterCommonDiscount.sendKeys("28");
+							enterCommonDiscount.sendKeys("38");
 
-							WebElement applyCommonDiscount = driver.findElement(By.xpath("//img[@class='percentage']"));
+							applyCommonDiscount = driver.findElement(By.xpath("//img[@class='percentage']"));
 
 							applyCommonDiscount.click();
 
@@ -183,7 +208,7 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 							System.out.println(" actual provided common discount is " + getActualCommonDiscount
 									+ " length is :" + getActualCommonDiscount.length());
 
-							double actualCommonDiscount = Double.valueOf(getActualCommonDiscount.trim().split(" ")[0]);
+							actualCommonDiscount = Double.valueOf(getActualCommonDiscount.trim().split(" ")[0]);
 
 							System.out.println(" after converting price is :" + actualCommonDiscount);
 
@@ -196,28 +221,26 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 
 							double expectedCommonDiscount = (expectedSubTotal * providedCommonDiscount) / 100;
 
-							double expTotalDiscount = expectedDiscount + expectedCommonDiscount;
+							double expTotalDiscount = expIndidualDiscount + expectedCommonDiscount;
 
 							System.out.println("Total discount is : " + expTotalDiscount + " individualDiscount is : "
-									+ expectedDiscount + " Common Discount is : " + expectedCommonDiscount);
+									+ expIndidualDiscount + " Common Discount is : " + expectedCommonDiscount);
 
 							double expectedSubTotalAfterCommonDiscount = priceOfSelectedService1 - expTotalDiscount;
 
 							double expGstAfterCommonDiscount = twoDigitRounding(
 									expectedSubTotalAfterCommonDiscount * 0.18);
-							// double expectedGSTAmt = twoDigitRounding((priceOfSelectedService1 -
-							// expectedDiscount) * 0.18);
 
-							String getCommonDiscountGstAmount = driver
+							String getGstAmtForComDisc = driver
 									.findElement(By.xpath("//span[@class='summaryBox__GST__money ']")).getText();
 							double actualCommonDiscountGstAmount = Double
-									.valueOf(getCommonDiscountGstAmount.trim().split(" ")[0]);
-							System.out.println("**** " + getCommonDiscountGstAmount.length() + " value is :"
+									.valueOf(getGstAmtForComDisc.trim().split(" ")[0]);
+							System.out.println("**** " + getGstAmtForComDisc.length() + " value is :"
 									+ actualCommonDiscountGstAmount);
 
 							if (actualCommonDiscountGstAmount == expGstAfterCommonDiscount) {
 								System.out.println(
-										" Congratulation !! Gst amount is correct after prividing common discount "
+										" Test Case Passed !! Gst amount is correct after prividing common discount "
 												+ expGstAfterCommonDiscount);
 
 								double expSubTotalAfterCommonDiscount = priceOfSelectedService1 - expTotalDiscount;
@@ -240,7 +263,7 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 								if (actAmtPayableAfterComDiscount == expTotalPayableAfterCommonDiscount) {
 
 									System.out.println(
-											" Congratulation !! After providing common discount, Total Payable amount is correct ");
+											" Test Case Passed !! After providing common discount, Total Payable amount is correct ");
 
 									double expAmountPaidAfterCommonDiscount = twoDigitRounding(
 											expectedSubTotalAfterCommonDiscount + expGstAfterCommonDiscount);
@@ -248,49 +271,68 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 									if (expTotalPayableAfterCommonDiscount == expAmountPaidAfterCommonDiscount) {
 
 										System.out.println(
-												" Congratulations !! After providing common discount, Paid Amount is correct");
+												" Test Case Passed !! After providing common discount, Paid Amount is correct");
 
 										if (actualBalanceValue == expectedBalance) {
 
 											System.out.println(
-													" Congratulation !! After providing common discount, Balance value is correct");
+													" Test Case Passed !! After providing common discount, Balance value is correct");
 
-											WebElement paymentMethod = driver
+											WebElement selectpaymentMethodDropDown = driver
 													.findElement(By.xpath("//select[@ng-reflect-is-disabled='false']"));
-											paymentMethod.click();
+											selectpaymentMethodDropDown.click();
 											WebElement selectPaymentMode = driver
-													.findElement(By.xpath("//option[@ng-reflect-value='Testing']"));
+													.findElement(By.xpath("//option[@ng-reflect-value='Google Pay']"));
 											selectPaymentMode.click();
 											WebElement submitWalkin = driver
 													.findElement(By.xpath("//button[text()='Submit']"));
 											submitWalkin.click();
+											System.out.println(
+													"Congratulation !! Test Case Passed with both Common_And_Individual Discount");
 
-											System.out.println(" Succccessfully walk-in is done !!!!!!");
+											wait("//button[text()='Create new walkin']");
+
+											driver.findElement(By.xpath("//button[text()='Create new walkin']"))
+													.click();
 
 										} else {
 											System.out.println(
-													" Oops !! after providing common discount, Balance value is not correct");
+													" Test Case Failed !! after providing common discount, Balance value is not correct");
+
+											takeScreenshot("BalanceAmountAfterComDiscIssue.png");
 										}
 
 									}
 
 									else {
 										System.out.println(
-												" Oops !! After providing common discount, Paid Amount is not correct as payable is :"
+												" Test Case Failed !! After providing common discount, Paid Amount is not correct as payable is :"
 														+ expTotalPayableAfterCommonDiscount + " and paid is:"
 														+ expAmountPaidAfterCommonDiscount);
+
+										takeScreenshot("paidAmountAfterComDiscIssue.png");
 									}
 
+								} else {
+									System.out.println(
+											" Test Case Failed !! As after providing common discount, Total Payable amount is not matched with expected Total Payable");
+
+									takeScreenshot("TotalPayableAfterComDiscIssue.png");
 								}
 
 							} else {
 								System.out.println(
-										" Oops !! Gst amount is not correct after providing common discount, Gst amount should be : Rs."
+										" Test Case Failed !! Gst amount is not correct after providing common discount, Gst amount should be : Rs."
 												+ expGstAfterCommonDiscount + " instead of Rs." + actualGstAmt);
+								takeScreenshot("GstAmountAfterComDiscIssue.png");
+
 							}
 
 						} else {
 							System.out.println(" Test Case Failed !! Balance amount is not correct in summary page");
+
+							takeScreenshot("BalanceAmountIssue.png");
+
 						}
 
 					} else {
@@ -298,10 +340,13 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 								" Test Case Failed !! Paid amount hasn't been taken correctly in summary page :"
 										+ expectedAmountPaid);
 
+						takeScreenshot("PaidAmountIssue.png");
+
 					}
 				} else {
 					System.out.println(" Test Case Failed !! Total Payable amount is not correct");
 
+					takeScreenshot("TotalPayableIssue.png");
 				}
 
 			}
@@ -309,11 +354,16 @@ public class Walkins_With_Individual_And_Common_Discount extends Walkin_With_Ind
 			else {
 				System.out.println(" Test Case Failed !! GST amount is not correct. as actual GST amount is : "
 						+ actualGstAmt + " and expected GST amount is : " + expectedGSTAmt);
+
+				takeScreenshot("GstAmountIssue.png");
+
 			}
 
 		} else {
 			System.out.println(" Test Case Failed !! Individual Discount is not correct as actual Discount amount is : "
-					+ actualIndividualDiscount1 + " and expected discount amount is : " + expectedDiscount);
+					+ actualIndividualDiscount1 + " and expected discount amount is : " + expIndidualDiscount);
+			takeScreenshot("IndDiscountIssue.png");
+
 		}
 
 	}

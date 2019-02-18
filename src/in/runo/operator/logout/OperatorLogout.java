@@ -9,18 +9,20 @@ import in.runo.operator.login.OperatorLogin;
 public class OperatorLogout extends OperatorLogin{
 	
 
-	public void operatorLogout() throws InterruptedException {
+	public static void operatorLogout() throws InterruptedException {
 		
 			
 		Thread.sleep(6000);
 		 
 		driver.findElement(By.xpath("//input[@type='image']")).click();
 		
-		System.out.println(" Logout Successfully !! ");
-				
-		Thread.sleep(1000);
+		System.out.println(" Operator Logout Successfully !! ");
 		
-		driver.close();
+		//driver.close();
+		
+		
+		
+		
 
 	}
 
