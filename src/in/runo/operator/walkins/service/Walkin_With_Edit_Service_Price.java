@@ -117,6 +117,7 @@ public class Walkin_With_Edit_Service_Price extends Walkin_With_Individual_Disco
 		customerPersonalDetails("9028123121", "editServiceQuantity");
 		WebElement selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+		wait("//span[text()='Skin Pearl Lightening  ( FACIALS ) ']");
 		WebElement selectService = driver.findElement(By.xpath("//span[text()='Skin Pearl Lightening  ( FACIALS ) ']"));
 		selectService.click();
 		WebElement editServicePrice = driver.findElement(By.xpath("//input[@min='0']"));

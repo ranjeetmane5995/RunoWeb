@@ -10,16 +10,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 
 public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
-	
+
 	public static int providedCreditAmt;
 	public static double usedCreditValue;
-	
-	public static double actUsedCreditsBillValue; 
-	
+
+	public static double actUsedCreditsBillValue;
+
 	public static void addingWalkinForCredits() throws InterruptedException {
 		customerPersonalDetails("8830175067", "Adding Credits");
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+
+		wait("//span[text()='Crimping (Starting)  ( HAIR CUT ) ']");
 		driver.findElement(By.xpath("//span[text()='Crimping (Starting)  ( HAIR CUT ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
@@ -41,12 +43,8 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 	public static void addingCredits(String CreditValue, String CreditAmt) throws InterruptedException, IOException {
 		customerPersonalDetails("8830175067", "Adding Credits");
 
-		
-		System.out.println(" 2credit amoutis :"+CreditAmt);
-		
-		providedCreditAmt = Integer.parseInt(CreditAmt); 
-		
-		//CreditAmount = CreditAmt;
+		providedCreditAmt = Integer.parseInt(CreditAmt);
+
 		wait("//div[@class='creditsIcon col-sm-6 p-30 m-0']//span[@class='creditsIcon__txt']");
 		String getPreCreditValue = driver
 				.findElement(By.xpath("//div[@class='creditsIcon col-sm-6 p-30 m-0']//span[@class='creditsIcon__txt']"))
@@ -54,7 +52,7 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 
 		double availableCreditValue = Double.valueOf(getPreCreditValue);
 
-		System.out.println(" prefevious credit value is :" + getPreCreditValue);
+		System.out.println(" prefevious credit value is :" + availableCreditValue);
 
 		wait("//span[contains(text(),'Add Credits')]");
 
@@ -80,10 +78,13 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 
 		if (getActCategoryName.equals(expCategoryName)) {
 
-			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
+			
 			System.out.println(" Test Case Passed !! As category name is matched with expected Categoryame");
 
+			
+			wait("//span[@class='summaryBox__service__price']//input[@type='number']");
 			String getActCreditAmt = driver
 					.findElement(By.xpath("//span[@class='summaryBox__service__price']//input[@type='number']"))
 					.getAttribute("value");
@@ -147,6 +148,8 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 		customerPersonalDetails("8830175067", "Adding Credits");
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+		
+		wait("//span[text()='Gold Ritual  ( FACIALS ) ']");
 		driver.findElement(By.xpath("//span[text()='Gold Ritual  ( FACIALS ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
@@ -185,10 +188,10 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 			String getUsedCreditValue = driver.findElement(By.xpath("//span[@class='summaryBox__credits__value']"))
 					.getText();
 
-			 usedCreditValue = Double.valueOf(getUsedCreditValue.trim().split(" ")[1]);
+			usedCreditValue = Double.valueOf(getUsedCreditValue.trim().split(" ")[1]);
 
-			 actUsedCreditsBillValue= actualAmountPayable-usedCreditValue;
-			
+			actUsedCreditsBillValue = actualAmountPayable - usedCreditValue;
+
 			if (usedCreditValue == actualAmountPayable) {
 				System.out.println("Test Case Passed !! As used credit amount is showing correctly in summary page");
 
@@ -209,9 +212,9 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 					double actBalanceAmount = Double.valueOf(getBalanceAmount.trim().split(" ")[0]);
 
 					double expBalance = usedCreditValue - actualAmountPayable;
-					
-					System.out.println(" @@@ Used CREDIT VALUE IS : "+Walkin_With_Credits.usedCreditValue);
-					System.out.println(" Amount payable is :"+actualAmountPayable);
+
+					System.out.println(" @@@ Used CREDIT VALUE IS : " + Walkin_With_Credits.usedCreditValue);
+					System.out.println(" Amount payable is :" + actualAmountPayable);
 
 					if (actBalanceAmount == expBalance) {
 						System.out.println(" Test Case Passed !! As Balance Amount is correct");
@@ -227,24 +230,23 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 						if (actPaidAmount == expPartialPaid) {
 
 							System.out.println(" Test Case Passed !! As partial paid amount has taken correct amount");
-							
+
 							wait("//select[@class='js-example-basic-single nice-textbox ng-untouched ng-pristine']");
-							
-							WebElement paymentMethod = driver
-									.findElement(By.xpath("//select[@class='js-example-basic-single nice-textbox ng-untouched ng-pristine']"));
+
+							WebElement paymentMethod = driver.findElement(By.xpath(
+									"//select[@class='js-example-basic-single nice-textbox ng-untouched ng-pristine']"));
 
 							paymentMethod.click();
 
 							driver.findElement(By.xpath("//option[@ng-reflect-value='Cash']")).click();
 
 							driver.findElement(By.xpath("//button[text()='Submit']")).click();
-							
+
 							wait("//button[text()='Create new walkin']");
-							
+
 							System.out.println(" Congratulation !! Customer has used credits fpr billing successfully");
 
 							driver.findElement(By.xpath("//button[text()='Create new walkin']")).click();
-							
 
 						} else {
 							System.out.println(" Test Case Failed !! As partial paid amount is not correct");
@@ -273,11 +275,5 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

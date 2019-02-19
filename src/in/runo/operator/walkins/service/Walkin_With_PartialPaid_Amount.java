@@ -60,6 +60,7 @@ public class Walkin_With_PartialPaid_Amount extends Walkin_With_Individual_And_C
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+		wait("//span[text()='Gold Ritual  ( FACIALS ) ']");
 		driver.findElement(By.xpath("//span[text()='Gold Ritual  ( FACIALS ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
@@ -155,6 +156,7 @@ public class Walkin_With_PartialPaid_Amount extends Walkin_With_Individual_And_C
 			wait("//div[@class='ng-select-container']");
 			selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 			selectServiceDropDownlist.click();
+			wait("//span[text()='Gold Ritual  ( FACIALS ) ']");
 			driver.findElement(By.xpath("//span[text()='Gold Ritual  ( FACIALS ) ']")).click();
 			selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 			selectEmpDropDownList.click();

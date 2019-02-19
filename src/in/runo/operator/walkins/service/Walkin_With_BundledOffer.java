@@ -23,6 +23,8 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+		
+		wait("//span[text()='3+1 Fruit Facial  (FACIALS)  ( Bundled offer ) ']");
 		driver.findElement(By.xpath("//span[text()='3+1 Fruit Facial  (FACIALS)  ( Bundled offer ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
@@ -77,6 +79,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 
 					System.out.println(" Test Case Passed !! As Individual discount is correct");
 
+					wait("//span[@class='summaryBox__GST__money ']");
 					String getGstAmount = driver.findElement(By.xpath("//span[@class='summaryBox__GST__money ']"))
 							.getText();
 					actualGstAmt = Double.valueOf(getGstAmount.trim().split(" ")[0]);
@@ -86,6 +89,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 					if (actualGstAmt == expectedGSTAmt) {
 						System.out.println(" Test Case Passed !! As Gst amount is correct");
 
+						wait("//span[@class='summaryBox__grandTotal__value']");
 						String getActualPayable = driver
 								.findElement(By.xpath("//span[@class='summaryBox__grandTotal__value']")).getText();
 
@@ -98,6 +102,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 						if (actualAmountPayable == expectedTotalPayable) {
 							System.out.println(" Test Case Passed !! As Total Payable amount is correct");
 
+							wait("//span[@class='summaryBox__amountPaid__value']");
 							String getAmountPaid = driver
 									.findElement(By.xpath("//span[@class='summaryBox__amountPaid__value']")).getText();
 
@@ -108,6 +113,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 							if (expectedAmountPaid == expectedAmountPaid) {
 								System.out.println(" Test Case Passed !! As paid amount is correct");
 
+								wait("//span[@class='summaryBox__balance__value']");
 								String getBalanceValue = driver
 										.findElement(By.xpath("//span[@class='summaryBox__balance__value']")).getText();
 
@@ -133,6 +139,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 
 										paymentMethod.click();
 
+										wait("//option[@ng-reflect-value='Cash']");
 										driver.findElement(By.xpath("//option[@ng-reflect-value='Cash']")).click();
 
 										driver.findElement(By.xpath("//button[text()='Submit']")).click();
@@ -200,6 +207,8 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 			wait("//div[@class='ng-select-container']");
 			selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 			selectServiceDropDownlist.click();
+			
+			wait("//span[text()='Fruit Facial   ( FACIALS ) ']");
 			driver.findElement(By.xpath("//span[text()='Fruit Facial   ( FACIALS ) ']")).click();
 			selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 			selectEmpDropDownList.click();
@@ -228,6 +237,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 				System.out
 						.println(" Test Case Passed !! As Bundled offer discount is correctly showing in summary page");
 
+				wait("//span[@class='summaryBox__GST__money ']");
 				String getGstAmount = driver.findElement(By.xpath("//span[@class='summaryBox__GST__money ']"))
 						.getText();
 				actualGstAmt = Double.valueOf(getGstAmount.trim().split(" ")[0]);
@@ -237,6 +247,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 				if (actualGstAmt == expGst) {
 					System.out.println(" Test Case Passed !! As GST amount is correct");
 
+					wait("//span[@class='summaryBox__grandTotal__value']");
 					String getActualPayable = driver
 							.findElement(By.xpath("//span[@class='summaryBox__grandTotal__value']")).getText();
 
@@ -312,6 +323,8 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+		
+		wait(ServiceName);
 		driver.findElement(By.xpath(ServiceName)).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
@@ -484,6 +497,8 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 		wait("//div[@class='ng-select-container']");
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+		
+		wait(ServiceName);
 		driver.findElement(By.xpath(ServiceName)).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
@@ -539,6 +554,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 					if (actualAmountPaid == expectedAmountPaid) {
 						System.out.println(" Test Case Passed !! As Amount to pe paid is showing correctly");
 
+						wait("//span[@class='summaryBox__balance__value']");
 						String getBalanceValue = driver
 								.findElement(By.xpath("//span[@class='summaryBox__balance__value']")).getText();
 

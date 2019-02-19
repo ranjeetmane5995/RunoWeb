@@ -93,7 +93,7 @@ public class MainTestCase extends SetPath {
 
 		// ServiceBillValue.verifyAddCreditsBillValue();
 
-		ServiceBillValue.verify_Credits_Used_BillValue();
+	//	ServiceBillValue.verify_Credits_Used_BillValue();
 
 		SubscriberLogout.sbLogout();
 

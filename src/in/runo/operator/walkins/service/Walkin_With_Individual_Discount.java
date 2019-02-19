@@ -117,6 +117,8 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+		
+		wait("//span[text()='Skin Pearl Lightening  ( FACIALS ) ']");
 		driver.findElement(By.xpath("//span[text()='Skin Pearl Lightening  ( FACIALS ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();

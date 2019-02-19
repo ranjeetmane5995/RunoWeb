@@ -105,6 +105,8 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 		wait("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']");
 
 		driver.findElement(By.xpath("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']")).click();
+
+		wait("//span[@class='mat-option-text'][contains(text(),'Today')]");
 		driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'Today')]")).click();
 
 		wait("//input[@placeholder='Search walkins']");
@@ -149,9 +151,11 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 		wait("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']");
 
 		driver.findElement(By.xpath("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']")).click();
+		wait("//span[@class='mat-option-text'][contains(text(),'Today')]");
 		driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'Today')]")).click();
 
-		Thread.sleep(2000);
+//		Thread.sleep(2000);
+		wait("//input[@placeholder='Search walkins']");
 
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).click();
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).sendKeys("8830175067");
@@ -178,13 +182,9 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 		}
 
 	}
-	
-	
-	public static void verify_UsingCreditsAndPaid_BillValue()
-	{
-		
-		
-		
+
+	public static void verify_UsingCreditsAndPaid_BillValue() {
+
 	}
 
 }

@@ -53,6 +53,8 @@ public class Walkin_With_Individual_And_Com_Discount extends Walkin_With_Individ
 		}
 
 		driver.findElement(By.xpath("//div[@class='ng-select-container']")).click();
+		
+		wait("//span[text()='Ironing (Long Hair)  ( HAIR CUT ) ']");
 		driver.findElement(By.xpath("//span[text()='Ironing (Long Hair)  ( HAIR CUT ) ']")).click();
 		driver.findElement(By.xpath("//select[@ng-reflect-name='employee']")).click();
 		driver.findElement(By.xpath("//select[@ng-reflect-name='employee']")).click();

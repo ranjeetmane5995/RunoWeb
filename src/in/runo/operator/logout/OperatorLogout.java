@@ -12,7 +12,7 @@ public class OperatorLogout extends OperatorLogin{
 	public static void operatorLogout() throws InterruptedException {
 		
 			
-		Thread.sleep(6000);
+		Thread.sleep(3000);
 		 
 		driver.findElement(By.xpath("//input[@type='image']")).click();
 		

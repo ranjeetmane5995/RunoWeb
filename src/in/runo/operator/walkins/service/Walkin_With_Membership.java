@@ -57,7 +57,7 @@ public class Walkin_With_Membership extends Walkin_With_Individual_Discount {
 			
 			
 			//
-			
+			wait("//div[@class='selectMembership']//span[@class='selectMembership__text medium']");
 			
 			
 			driver.findElement(By.xpath("//div[@class='selectMembership']//span[@class='selectMembership__text medium']")).click();
@@ -69,7 +69,6 @@ public class Walkin_With_Membership extends Walkin_With_Individual_Discount {
 			String expCategoryName = "Membership";
 
 			if (actCategoryName.equals(expCategoryName))
-				;
 
 			{
 				System.out.println(" Test Case Passed !! As Category name is matched with expected category name");
@@ -135,6 +134,7 @@ public class Walkin_With_Membership extends Walkin_With_Individual_Discount {
 
 			selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 			selectServiceDropDownlist.click();
+			wait("//span[text()=' Age Defining  ( FACIALS ) ']");
 			driver.findElement(By.xpath("//span[text()=' Age Defining  ( FACIALS ) ']")).click();
 			selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 			selectEmpDropDownList.click();
