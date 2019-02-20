@@ -20,12 +20,12 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 		Walkin_With_PartialPaid_Amount.verifyPartialPaidAmount("9800111103", "verify_Partial_Paid_BillValue");
 		OperatorLogout.operatorLogout();
 		SubscriberLogin.subscriberLogin();
-		Thread.sleep(3000);
-		driver.findElement(By.linkText("Walkins")).click();
+		wait("//a[@ng-reflect-router-link='/walkins']");
+		driver.findElement(By.xpath("//a[@ng-reflect-router-link='/walkins']")).click();
 
-		wait("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']");
+		wait("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']");
 
-		driver.findElement(By.xpath("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']")).click();
+		driver.findElement(By.xpath("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']")).click();
 		driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'Today')]")).click();
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).click();
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).sendKeys("9800111103");
@@ -51,22 +51,21 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 
 	public static void verifyPastDueAmountBillValue() throws InterruptedException, IOException {
 
-		SubscriberLogout.sbLogout();
 		OperatorLogin.operatorLogin();
 
 		Walkin_With_PartialPaid_Amount.verifyPastDueAmount("9800111103");
 
 		OperatorLogout.operatorLogout();
 		SubscriberLogin.subscriberLogin();
-		Thread.sleep(3000);
-		driver.findElement(By.linkText("Walkins")).click();
+		wait("//a[@ng-reflect-router-link='/walkins']");
+		driver.findElement(By.xpath("//a[@ng-reflect-router-link='/walkins']")).click();
 
-		wait("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']");
+		wait("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']");
 
-		driver.findElement(By.xpath("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']")).click();
+		driver.findElement(By.xpath("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']")).click();
 		driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'Today')]")).click();
 
-		Thread.sleep(2000);
+		wait("//input[@placeholder='Search walkins']");
 
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).click();
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).sendKeys("9800111103");
@@ -99,12 +98,12 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 		OperatorLogout.operatorLogout();
 		SubscriberLogin.subscriberLogin();
 
-		Thread.sleep(5000);
-		driver.findElement(By.linkText("Walkins")).click();
+		wait("//a[@ng-reflect-router-link='/walkins']");
+		driver.findElement(By.xpath("//a[@ng-reflect-router-link='/walkins']")).click();
 
-		wait("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']");
+		wait("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']");
 
-		driver.findElement(By.xpath("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']")).click();
+		driver.findElement(By.xpath("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']")).click();
 
 		wait("//span[@class='mat-option-text'][contains(text(),'Today')]");
 		driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'Today')]")).click();
@@ -145,16 +144,15 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 		OperatorLogout.operatorLogout();
 		SubscriberLogin.subscriberLogin();
 
-		Thread.sleep(3000);
-		driver.findElement(By.linkText("Walkins")).click();
+		wait("//a[@ng-reflect-router-link='/walkins']");
+		driver.findElement(By.xpath("//a[@ng-reflect-router-link='/walkins']")).click();
 
-		wait("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']");
+		wait("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']");
 
-		driver.findElement(By.xpath("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']")).click();
+		driver.findElement(By.xpath("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']")).click();
 		wait("//span[@class='mat-option-text'][contains(text(),'Today')]");
 		driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'Today')]")).click();
 
-//		Thread.sleep(2000);
 		wait("//input[@placeholder='Search walkins']");
 
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).click();
@@ -180,10 +178,14 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 					+ Walkin_With_Credits.actUsedCreditsBillValue + " instead of " + getActBillValue);
 			takeScreenshot("creditBillValue.png");
 		}
-
 	}
 
-	public static void verify_UsingCreditsAndPaid_BillValue() {
+	public static void verify_UsingCreditsAndPaid_BillValue() throws InterruptedException, IOException {
+
+		OperatorLogin.operatorLogin();
+		Walkin_With_Credits.addingCredits("", "1000", "500");
+		// Walkin_With_Credits.addingWalkinForCredits("//span[text()='Crimping
+		// (Starting) ( HAIR CUT ) ']");
 
 	}
 

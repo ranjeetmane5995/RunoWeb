@@ -16,13 +16,13 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 
 	public static double actUsedCreditsBillValue;
 
-	public static void addingWalkinForCredits() throws InterruptedException {
+	public static void addingWalkinForCredits(String serviceName) throws InterruptedException {
 		customerPersonalDetails("8830175067", "Adding Credits");
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
 
-		wait("//span[text()='Crimping (Starting)  ( HAIR CUT ) ']");
-		driver.findElement(By.xpath("//span[text()='Crimping (Starting)  ( HAIR CUT ) ']")).click();
+		wait(serviceName);
+		driver.findElement(By.xpath(serviceName)).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
 		driver.findElement(By.xpath("//*[text()=' Automation 3 ']")).click();
@@ -40,8 +40,8 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 
 	}
 
-	public static void addingCredits(String CreditValue, String CreditAmt) throws InterruptedException, IOException {
-		customerPersonalDetails("8830175067", "Adding Credits");
+	public static void addingCredits(String CustomerNumber, String CreditValue, String CreditAmt) throws InterruptedException, IOException {
+		customerPersonalDetails(CustomerNumber, "Adding Credits");
 
 		providedCreditAmt = Integer.parseInt(CreditAmt);
 

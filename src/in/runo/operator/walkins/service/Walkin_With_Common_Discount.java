@@ -251,6 +251,7 @@ public class Walkin_With_Common_Discount extends Walkin_With_Individual_Discount
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
+		wait("//span[text()='Ironing (Long Hair)  ( HAIR CUT ) ']");
 		driver.findElement(By.xpath("//span[text()='Ironing (Long Hair)  ( HAIR CUT ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();

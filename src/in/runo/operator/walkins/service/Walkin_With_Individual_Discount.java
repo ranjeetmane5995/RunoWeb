@@ -47,8 +47,9 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 	public static int actProvidedQuantity;
 	public static double actBillValue1;
 	public static double actBillValue2;
-	public static WebDriverWait wait = new WebDriverWait(driver, 6);
-
+	public static WebDriverWait wait = new WebDriverWait(driver, 10);
+	//public static WebDriverWait waitLink = new WebDriverWait(driver, 12);
+	
 	static double twoDigitRounding(double num) {
 		return Math.round(num * 100) / 100.0;
 	}
@@ -71,6 +72,12 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(waitElement)));
 
 	}
+//	public static void waitLink(String waitLinkElement)
+//
+//	{
+//		waitLink.until(ExpectedConditions.presenceOfElementLocated(By.linkText(waitLinkElement)));
+//
+//	}
 
 	public static void customerPersonalDetails(String MobileNumber, String CustomerName) throws InterruptedException {
 
@@ -138,7 +145,7 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 			categoryName1 = driver.findElement(By.xpath("//span[@class='summaryBox__service__categoryName']"))
 					.getText();
 
-			if (categoryName1.equals("Bleach")) {
+			if (categoryName1.equals("FACIALS")) {
 
 				System.out
 						.println(" Test Case Passed !! Category name of selected services is correct in summary page");

@@ -21,12 +21,13 @@ public class ServiceQuantity extends Walkin_With_Individual_Discount {
 		OperatorLogout.operatorLogout();
 		SubscriberLogin.subscriberLogin();
 
-		Thread.sleep(4000);
-		driver.findElement(By.linkText("Walkins")).click();
+		wait("//a[@ng-reflect-router-link='/walkins']");
+		
+		driver.findElement(By.xpath("//a[@ng-reflect-router-link='/walkins']")).click();
 
-		wait("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']");
+		wait("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']");
 
-		driver.findElement(By.xpath("//mat-select[@id='mat-select-8']//div[@class='mat-select-arrow']")).click();
+		driver.findElement(By.xpath("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']")).click();
 		driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'Today')]")).click();
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).click();
 		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).sendKeys("9028123121");

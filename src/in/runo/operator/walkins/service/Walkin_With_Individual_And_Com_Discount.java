@@ -83,7 +83,7 @@ public class Walkin_With_Individual_And_Com_Discount extends Walkin_With_Individ
 
 		categoryName1 = driver.findElement(By.xpath("//span[@class='summaryBox__service__categoryName']")).getText();
 
-		if (categoryName1.equals("Bleach")) {
+		if (categoryName1.equals("HAIR CUT")) {
 
 			System.out.println(" Test Case Passed !! Category name of selected services is correct in summary page");
 			takeScreenshot("CategoryNameIssue.png");

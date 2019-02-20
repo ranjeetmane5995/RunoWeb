@@ -333,6 +333,7 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 		addSummary = driver.findElement(By.xpath("//button[@class='addSummary']"));
 		addSummary.click();
 
+		wait("//span[@class='summaryBox__service__price']");
 		String getPriceOfSelectedService1 = driver.findElement(By.xpath("//span[@class='summaryBox__service__price']"))
 				.getText();
 
