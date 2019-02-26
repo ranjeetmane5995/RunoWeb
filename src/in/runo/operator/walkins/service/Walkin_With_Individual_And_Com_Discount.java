@@ -11,47 +11,10 @@ public class Walkin_With_Individual_And_Com_Discount extends Walkin_With_Individ
 	public static WebElement applyCommonDiscount;
 	public static double actualCommonDiscount;
 
-	public void createWalkinsWithIndividualAndCommonDiscount() throws InterruptedException, IOException {
+	public static void createWalkinsWithIndividualAndCommonDiscount(String mobileNumber, String customerName, String indDisc, String OverallDiscInPercentage ) throws InterruptedException, IOException {
 
-		wait("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']");
-
-		driver.findElement(By.xpath("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']"))
-				.sendKeys("9354154121");
-
-		// Handling noSuchElementException for existing customer
-		try {
-
-			wait("//span[@class='search-result-number']");
-			if (driver.findElement(By.xpath("//span[@class='search-result-number']")) != null) {
-				driver.findElement(By.xpath("//span[@class='search-result-number']")).click();
-				System.out.println(" customer is  existing customer");
-			}
-		} catch (Exception c) {
-
-			wait("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']");
-			driver.findElement(
-					By.xpath("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']"))
-					.sendKeys("Web Automation For IndDiscount");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='email']")).sendKeys("automation@gmail.com");
-
-			WebElement selectDob = driver.findElement(By.xpath("//input[@ng-reflect-name='dob']"));
-
-			selectDob.click();
-
-			driver.findElement(By.xpath("//button[@class='previous']")).click();
-
-			driver.findElement(By.xpath("//span[text()='15']")).click();
-
-			driver.findElement(By.xpath("//div[text()='Others']")).click();
-
-			driver.findElement(By.xpath("//input[@ng-reflect-name='locality']"))
-					.sendKeys("Sr No: 22/2, 2nd Floor Near Petrol Pump Bidar");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='city']")).sendKeys("Bidar");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='pincode']")).sendKeys("410047");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='notes']")).sendKeys(" He is a regular customer ");
-
-		}
-
+		customerPersonalDetails(mobileNumber, customerName);
+		
 		driver.findElement(By.xpath("//div[@class='ng-select-container']")).click();
 		
 		wait("//span[text()='Ironing (Long Hair)  ( HAIR CUT ) ']");
@@ -61,7 +24,7 @@ public class Walkin_With_Individual_And_Com_Discount extends Walkin_With_Individ
 
 		wait("//*[text()=' Automation 2 ']");
 		driver.findElement(By.xpath("//*[text()=' Automation 2 ']")).click();
-		driver.findElement(By.xpath("//input[@maxlength='2']")).sendKeys("35");
+		driver.findElement(By.xpath("//input[@maxlength='2']")).sendKeys(indDisc);
 
 		driver.findElement(By.xpath("//button[@class='addSummary']")).click();
 
@@ -198,7 +161,7 @@ public class Walkin_With_Individual_And_Com_Discount extends Walkin_With_Individ
 
 							enterCommonDiscount = driver.findElement(By.xpath("//input[@placeholder='%']"));
 
-							enterCommonDiscount.sendKeys("38");
+							enterCommonDiscount.sendKeys(OverallDiscInPercentage);
 
 							applyCommonDiscount = driver.findElement(By.xpath("//img[@class='percentage']"));
 

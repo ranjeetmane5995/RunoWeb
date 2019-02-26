@@ -10,47 +10,14 @@ public class Walkin_With_Common_Discount extends Walkin_With_Individual_Discount
 	public static WebElement selectingPaymentMode;
 	public static WebElement submitWalkin;
 
-	public void commonDiscountInPercentage(String discount) throws InterruptedException, IOException {
+	public static void commonDiscountInPercentage(String mobileNumber, String customerName, String discount)
+			throws InterruptedException, IOException {
 
-		wait("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']");
-
-		driver.findElement(By.xpath("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']"))
-				.sendKeys("9191919192");
-
-		// Handling noSuchElementException for New Customer
-		try {
-			wait("//span[@class='search-result-number']");
-			if (driver.findElement(By.xpath("//span[@class='search-result-number']")) != null) {
-				driver.findElement(By.xpath("//span[@class='search-result-number']")).click();
-				System.out.println(" customer is  existing customer");
-			}
-		} catch (Exception c) {
-			wait("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']");
-			driver.findElement(
-					By.xpath("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']"))
-					.sendKeys("WebAuto ComDiscInPercentage");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='email']")).sendKeys("automation@gmail.com");
-
-			WebElement selectDob = driver.findElement(By.xpath("//input[@ng-reflect-name='dob']"));
-
-			selectDob.click();
-
-			driver.findElement(By.xpath("//button[@class='previous']")).click();
-
-			driver.findElement(By.xpath("//span[text()='12']")).click();
-
-			driver.findElement(By.xpath("//div[text	()='Others']")).click();
-
-			driver.findElement(By.xpath("//input[@ng-reflect-name='locality']"))
-					.sendKeys("Sr No: 22/2, 2nd Floor Near Petrol Pump Bidar");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='city']")).sendKeys("Bidar");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='pincode']")).sendKeys("410048");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='notes']")).sendKeys(" He is a regular customer ");
-		}
+		customerPersonalDetails(mobileNumber, customerName);
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
-		
+
 		wait("//span[text()='Crimping (Starting)  ( HAIR CUT ) ']");
 		driver.findElement(By.xpath("//span[text()='Crimping (Starting)  ( HAIR CUT ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
@@ -211,43 +178,10 @@ public class Walkin_With_Common_Discount extends Walkin_With_Individual_Discount
 
 	}
 
-	public void commonDiscountInINR(String discount) throws IOException, InterruptedException {
+	public static void commonDiscountInINR(String mobileNumber, String customerName, String discount)
+			throws IOException, InterruptedException {
 
-		wait("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']");
-
-		driver.findElement(By.xpath("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']"))
-				.sendKeys("9191919193");
-
-		// Handling noSuchElementException for New Customer
-		try {
-			wait("//span[@class='search-result-number']");
-			if (driver.findElement(By.xpath("//span[@class='search-result-number']")) != null) {
-				driver.findElement(By.xpath("//span[@class='search-result-number']")).click();
-				System.out.println(" customer is  existing customer");
-			}
-		} catch (Exception c) {
-			wait("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']");
-			driver.findElement(
-					By.xpath("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']"))
-					.sendKeys("WebAuto ComDiscIn INR ");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='email']")).sendKeys("automation@gmail.com");
-
-			WebElement selectDob = driver.findElement(By.xpath("//input[@ng-reflect-name='dob']"));
-
-			selectDob.click();
-
-			driver.findElement(By.xpath("//button[@class='previous']")).click();
-
-			driver.findElement(By.xpath("//span[text()='22']")).click();
-
-			driver.findElement(By.xpath("//div[text	()='Others']")).click();
-
-			driver.findElement(By.xpath("//input[@ng-reflect-name='locality']"))
-					.sendKeys("Sr No: 22/2, 2nd Floor Near Petrol Pump Bidar");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='city']")).sendKeys("Bidar");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='pincode']")).sendKeys("410048");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='notes']")).sendKeys(" He is a regular customer ");
-		}
+		customerPersonalDetails(mobileNumber, customerName);
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();

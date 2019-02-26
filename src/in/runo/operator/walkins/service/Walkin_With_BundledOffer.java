@@ -10,20 +10,21 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 	/*
 	 * Below test case contains :
 	 * 
-	 * 1. Adding Single bundled offer with individual discount
-	 * 2. Add walk-in for free services of single bundled offer 
-	 * 3. Adding Multiple Bundled Offer with common Discount 
-	 * 4. Add walk-in with free services of multiple bundled offer 
-	 * 5. validating that after completing free service, if user has taken the same service then this service should be considered as paid service.
+	 * 1. Adding Single bundled offer with individual discount 2. Add walk-in for
+	 * free services of single bundled offer 3. Adding Multiple Bundled Offer with
+	 * common Discount 4. Add walk-in with free services of multiple bundled offer
+	 * 5. validating that after completing free service, if user has taken the same
+	 * service then this service should be considered as paid service.
 	 */
 
-	public static void addSingleBundledOfferWithIndividualDiscount() throws InterruptedException, IOException {
+	public static void addSingleBundledOfferWithIndividualDiscount(String mobileNumber, String customerName)
+			throws InterruptedException, IOException {
 
-		customerPersonalDetails("9026665352", "Adding using bundled offer");
+		customerPersonalDetails(mobileNumber, customerName);
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
-		
+
 		wait("//span[text()='3+1 Fruit Facial  (FACIALS)  ( Bundled offer ) ']");
 		driver.findElement(By.xpath("//span[text()='3+1 Fruit Facial  (FACIALS)  ( Bundled offer ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
@@ -198,16 +199,17 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 
 	}
 
-	public static void availFreeServicesForSingleB_Offer() throws InterruptedException, IOException {
+	public static void availFreeServicesForSingleB_Offer(String mobileNumber, String customerName)
+			throws InterruptedException, IOException {
 
 		for (int i = 1; i <= 4; i++) {
 
-			customerPersonalDetails("9026665352", "Adding using bundled offer");
+			customerPersonalDetails(mobileNumber, customerName);
 
 			wait("//div[@class='ng-select-container']");
 			selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 			selectServiceDropDownlist.click();
-			
+
 			wait("//span[text()='Fruit Facial   ( FACIALS ) ']");
 			driver.findElement(By.xpath("//span[text()='Fruit Facial   ( FACIALS ) ']")).click();
 			selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
@@ -318,14 +320,17 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 		System.out.println(" Availed all free services");
 	}
 
-	public static void availPaidSingleService(String ServiceName) throws InterruptedException {
-		customerPersonalDetails("9026665352", "Walkin with Paid Service");
+	public static void availPaidSingleService(String mobileNumber, String customerName, String ServiceName)
+			throws InterruptedException {
+		customerPersonalDetails(mobileNumber, customerName);
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
-		
+
 		wait(ServiceName);
 		driver.findElement(By.xpath(ServiceName)).click();
+
+		wait("//select[@ng-reflect-name='employee']");
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
 		wait("//*[text()=' Automation 2 ']");
@@ -385,15 +390,17 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 
 	}
 
-	public static void addMultipleBundledOfferWithCommonDiscount() throws InterruptedException {
+	public static void addMultipleBundledOfferWithCommonDiscount(String mobileNumber, String customerName)
+			throws InterruptedException {
 
-		customerPersonalDetails("9026665352", "Adding multiple using bundled offer");
+		customerPersonalDetails(mobileNumber, customerName);
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
-		
+
 		wait("//span[text()='3+3+3 Skin Whitening  (FACIALS),Gold Ritual (FACIALS), Age Defining (FACIALS)  ( Bundled offer ) ']");
-		driver.findElement(By.xpath("//span[text()='3+3+3 Skin Whitening  (FACIALS),Gold Ritual (FACIALS), Age Defining (FACIALS)  ( Bundled offer ) ']"))
+		driver.findElement(By.xpath(
+				"//span[text()='3+3+3 Skin Whitening  (FACIALS),Gold Ritual (FACIALS), Age Defining (FACIALS)  ( Bundled offer ) ']"))
 				.click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
 		selectEmpDropDownList.click();
@@ -492,21 +499,26 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 
 	}
 
-	public static void availFreeService(String ServiceName) throws InterruptedException, IOException {
-		customerPersonalDetails("9026665352", "Adding using bundled offer");
+	public static void availFreeService(String mobileNumber, String customerName, String ServiceName)
+			throws InterruptedException, IOException {
+		customerPersonalDetails(mobileNumber, customerName);
 
 		wait("//div[@class='ng-select-container']");
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
-		
+
 		wait(ServiceName);
 		driver.findElement(By.xpath(ServiceName)).click();
-		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
-		selectEmpDropDownList.click();
+		Thread.sleep(2000);
+		wait("//select[@ng-reflect-name='employee']");
+		driver.findElement(By.xpath("//select[@ng-reflect-name='employee']")).click();
 		wait("//*[text()=' Automation 2 ']");
 		driver.findElement(By.xpath("//*[text()=' Automation 2 ']")).click();
 		addSummary = driver.findElement(By.xpath("//button[@class='addSummary']"));
 		addSummary.click();
+		
+		Thread.sleep(1000);
+		
 		wait("//span[@class='summaryBox__service__price']");
 
 		String getPriceOfSelectedService1 = driver.findElement(By.xpath("//span[@class='summaryBox__service__price']"))
@@ -603,12 +615,13 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 		}
 	}
 
-	public static void availFreeServicesForMultipleB_Offer() throws InterruptedException, IOException {
+	public static void availFreeServicesForMultipleB_Offer(String mobileNumber, String customerName)
+			throws InterruptedException, IOException {
 
 		for (int i = 1; i <= 4; i++) {
-			availFreeService("//span[text()='Gold Ritual  ( FACIALS ) ']");
-			availFreeService("//span[text()=' Age Defining  ( FACIALS ) ']");
-			availFreeService("//span[text()='Skin Whitening   ( FACIALS ) ']");
+			availFreeService(mobileNumber, customerName, "//span[text()='Gold Ritual  ( FACIALS ) ']");
+			availFreeService(mobileNumber, customerName, "//span[text()=' Age Defining  ( FACIALS ) ']");
+			availFreeService(mobileNumber, customerName, "//span[text()='Skin Whitening   ( FACIALS ) ']");
 
 			if (i == 3) {
 				System.out.println(" break is done !! as value of i is :" + i);
@@ -622,10 +635,10 @@ public class Walkin_With_BundledOffer extends Walkin_With_Individual_Discount {
 
 	}
 
-	public static void availPaidMultiService() throws InterruptedException {
-		availPaidSingleService("//span[text()='Gold Ritual  ( FACIALS ) ']");
-		availPaidSingleService("//span[text()=' Age Defining  ( FACIALS ) ']");
-		availPaidSingleService("//span[text()='Skin Whitening   ( FACIALS ) ']");
+	public static void availPaidMultiService(String mobileNumber, String customerName) throws InterruptedException {
+		availPaidSingleService(mobileNumber, customerName, "//span[text()='Gold Ritual  ( FACIALS ) ']");
+		availPaidSingleService(mobileNumber, customerName, "//span[text()=' Age Defining  ( FACIALS ) ']");
+		availPaidSingleService(mobileNumber, customerName, "//span[text()='Skin Whitening   ( FACIALS ) ']");
 
 		System.out.println(" Congratulation !! Test Case passed with Multiple Free services ");
 

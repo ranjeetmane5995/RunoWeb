@@ -46,6 +46,8 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 			System.out.println(" Test Case Failed !! As bill value is not correct. Bill value should be "
 					+ actualAmountPayable + " instead of " + getActBillValue);
 		}
+		
+		SubscriberLogout.sbLogout();
 
 	}
 
@@ -87,13 +89,14 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 					+ " instead of " + actBillValues);
 		}
 
+		SubscriberLogout.sbLogout();
 	}
 
 	public static void verifyAddCreditsBillValue() throws InterruptedException, IOException {
 
 		OperatorLogin.operatorLogin();
 
-		Walkin_With_Credits.usingCreditsForBilling();
+		Walkin_With_Credits.addingCredits("8830175067", "3000", "2000");
 
 		OperatorLogout.operatorLogout();
 		SubscriberLogin.subscriberLogin();
@@ -132,6 +135,7 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 					+ Walkin_With_Credits.providedCreditAmt + " instead of " + getActBillValue);
 			takeScreenshot("creditBillValue.png");
 		}
+		SubscriberLogout.sbLogout();
 
 	}
 
@@ -139,7 +143,7 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 
 		OperatorLogin.operatorLogin();
 
-		Walkin_With_Credits.usingCreditsForBilling();
+		Walkin_With_Credits.usingCreditsForBilling("8830175067");
 
 		OperatorLogout.operatorLogout();
 		SubscriberLogin.subscriberLogin();
@@ -178,14 +182,50 @@ public class ServiceBillValue extends Walkin_With_Individual_Discount {
 					+ Walkin_With_Credits.actUsedCreditsBillValue + " instead of " + getActBillValue);
 			takeScreenshot("creditBillValue.png");
 		}
+
+		SubscriberLogout.sbLogout();
 	}
 
 	public static void verify_UsingCreditsAndPaid_BillValue() throws InterruptedException, IOException {
 
 		OperatorLogin.operatorLogin();
-		Walkin_With_Credits.addingCredits("", "1000", "500");
-		// Walkin_With_Credits.addingWalkinForCredits("//span[text()='Crimping
-		// (Starting) ( HAIR CUT ) ']");
+		Walkin_With_Credits.addingCredits("9977884400", "540", "500");
+
+		Walkin_With_Credits.partialCreditAndPaidAmount("9977884400");
+
+		OperatorLogout.operatorLogout();
+		SubscriberLogin.subscriberLogin();
+		wait("//a[@ng-reflect-router-link='/walkins']");
+		driver.findElement(By.xpath("//a[@ng-reflect-router-link='/walkins']")).click();
+
+		wait("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']");
+
+		driver.findElement(By.xpath("//mat-select[@id='mat-select-7']//div[@class='mat-select-arrow']")).click();
+		wait("//span[@class='mat-option-text'][contains(text(),'Today')]");
+		driver.findElement(By.xpath("//span[@class='mat-option-text'][contains(text(),'Today')]")).click();
+
+		wait("//input[@placeholder='Search walkins']");
+
+		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).click();
+		driver.findElement(By.xpath("//input[@placeholder='Search walkins']")).sendKeys("9977884400");
+
+		wait("/html/body/app-dashboard/div/main/div/ng-component/div/div/div[3]/div/table/tbody/tr[1]/td[5]/span");
+
+		String getBillValue = driver.findElement(By.xpath(
+				"/html/body/app-dashboard/div/main/div/ng-component/div/div/div[3]/div/table/tbody/tr[1]/td[5]/span"))
+				.getText();
+
+		int expBillValue = Integer.parseInt(getBillValue.trim().split(" ")[1]);
+
+		if (Walkin_With_Credits.paidAmount == expBillValue) {
+			System.out.println(
+					" Test Case Passed !! As bill value is taken correctly, if customer used credits and cash for billing");
+		} else {
+			System.out.println(" Test Case Failed !! As bill value is not correct");
+			takeScreenshot("BillValueIssueWithCredits.png");
+		}
+
+		SubscriberLogout.sbLogout();
 
 	}
 

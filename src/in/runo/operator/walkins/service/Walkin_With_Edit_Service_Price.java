@@ -113,7 +113,7 @@ public class Walkin_With_Edit_Service_Price extends Walkin_With_Individual_Disco
 		}
 	}
 
-	public static void editingServiceQuantity() throws InterruptedException, IOException {
+	public static void editingServiceQuantity(String noOfService) throws InterruptedException, IOException {
 		customerPersonalDetails("9028123121", "editServiceQuantity");
 		WebElement selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
@@ -125,7 +125,7 @@ public class Walkin_With_Edit_Service_Price extends Walkin_With_Individual_Disco
 		editServicePrice.sendKeys("1000");
 		WebElement enterServiceQuantity = driver.findElement(By.xpath("//input[@onfocus='this.select();']"));
 		enterServiceQuantity.clear();
-		enterServiceQuantity.sendKeys("10");
+		enterServiceQuantity.sendKeys(noOfService);
 
 		String getServiceQuantity = driver.findElement(By.xpath("//input[@onfocus='this.select();']"))
 				.getAttribute("value");

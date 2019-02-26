@@ -1,5 +1,6 @@
 package in.runo.operator.walkins.service;
 
+import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -11,6 +12,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import in.runo.operator.login.OperatorLogin;
@@ -19,7 +21,6 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 
 	public static String date1;
 	public static String date2;
-	//public String CreditAmount;
 	public static double getActualProvidedDiscount;
 	public static String billSummaryTitle;
 	public static String categoryName1;
@@ -35,6 +36,7 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 	public static double expectedGSTAmt;
 	public static double expectedAmountPaid;
 	public static double expectedBalance;
+	public static double expectedTotalPayable;
 	public static WebElement selectingPaymentMode;
 	public static WebElement submitWalkin;
 	public static double expBillValue;
@@ -47,9 +49,8 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 	public static int actProvidedQuantity;
 	public static double actBillValue1;
 	public static double actBillValue2;
+	public static Select select;
 	public static WebDriverWait wait = new WebDriverWait(driver, 10);
-	//public static WebDriverWait waitLink = new WebDriverWait(driver, 12);
-	
 	static double twoDigitRounding(double num) {
 		return Math.round(num * 100) / 100.0;
 	}
@@ -65,6 +66,8 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 		FileUtils.copyFile(srcFile, destFile);
 
 	}
+	
+	
 
 	public static void wait(String waitElement)
 
@@ -72,21 +75,17 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(waitElement)));
 
 	}
-//	public static void waitLink(String waitLinkElement)
-//
-//	{
-//		waitLink.until(ExpectedConditions.presenceOfElementLocated(By.linkText(waitLinkElement)));
-//
-//	}
 
-	public static void customerPersonalDetails(String MobileNumber, String CustomerName) throws InterruptedException {
+	public static void customerPersonalDetails(String mobileNumber, String customerName) throws InterruptedException {
 
+		
 		wait("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']");
 		driver.findElement(By.xpath("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']"))
-				.sendKeys(MobileNumber);
+				.sendKeys(mobileNumber);
 
 		try {
-
+			
+			Thread.sleep(1000);
 			wait("//span[@class='search-result-number']");
 			if (driver.findElement(By.xpath("//span[@class='search-result-number']")) != null) {
 				driver.findElement(By.xpath("//span[@class='search-result-number']")).click();
@@ -97,7 +96,7 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 			wait("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']");
 			driver.findElement(
 					By.xpath("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']"))
-					.sendKeys(CustomerName);
+					.sendKeys(customerName);
 			driver.findElement(By.xpath("//input[@ng-reflect-name='email']")).sendKeys("automation@gmail.com");
 
 			WebElement selectDob = driver.findElement(By.xpath("//input[@ng-reflect-name='dob']"));
@@ -119,8 +118,11 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 		}
 	}
 
-	public static void createWalkinsWithIndividualDiscount(String IndDiscount)
+	public static void createWalkinsWithIndividualDiscount(String mobileNumber, String customerName, String IndDiscount)
 			throws InterruptedException, IOException {
+		
+		
+		customerPersonalDetails(mobileNumber, customerName);
 
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
@@ -214,7 +216,7 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 
 					expectedSubTotal = priceOfSelectedService1 - expectedDiscount;
 
-					double expectedTotalPayable = expectedSubTotal + expectedGSTAmt;
+					expectedTotalPayable = expectedSubTotal + expectedGSTAmt;
 //
 					if (actualAmountPayable == expectedTotalPayable) {
 
@@ -237,7 +239,7 @@ public class Walkin_With_Individual_Discount extends OperatorLogin {
 									.findElement(By.xpath("//span[@class='summaryBox__balance__value']")).getText();
 
 							actualBalanceValue = Double.valueOf(getBalanceValue.trim().split(" ")[0]);
-							double expectedBalance = expectedTotalPayable - expectedAmountPaid;
+							expectedBalance = expectedTotalPayable - expectedAmountPaid;
 
 							if (actualBalanceValue == expectedBalance) {
 								System.out.println(" Test Case Passed !! Balance amount is correct in summary page");

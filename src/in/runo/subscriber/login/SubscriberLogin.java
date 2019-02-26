@@ -8,6 +8,8 @@ import in.runo.runoweb.MainTestCase;
 public class SubscriberLogin extends MainTestCase {
 
 	public static void subscriberLogin() throws InterruptedException {
+		
+		Thread.sleep(4000);
 
 		WebElement sbUser = driver.findElement(By.xpath("//input[@placeholder='Mobile Number']"));
 		sbUser.sendKeys("6666666667");

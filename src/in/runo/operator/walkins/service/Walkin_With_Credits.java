@@ -13,6 +13,8 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 
 	public static int providedCreditAmt;
 	public static double usedCreditValue;
+	public static double usedCredits;
+	public static double paidAmount;
 
 	public static double actUsedCreditsBillValue;
 
@@ -40,7 +42,8 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 
 	}
 
-	public static void addingCredits(String CustomerNumber, String CreditValue, String CreditAmt) throws InterruptedException, IOException {
+	public static void addingCredits(String CustomerNumber, String CreditValue, String CreditAmt)
+			throws InterruptedException, IOException {
 		customerPersonalDetails(CustomerNumber, "Adding Credits");
 
 		providedCreditAmt = Integer.parseInt(CreditAmt);
@@ -78,12 +81,10 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 
 		if (getActCategoryName.equals(expCategoryName)) {
 
-			//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			// driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-			
 			System.out.println(" Test Case Passed !! As category name is matched with expected Categoryame");
 
-			
 			wait("//span[@class='summaryBox__service__price']//input[@type='number']");
 			String getActCreditAmt = driver
 					.findElement(By.xpath("//span[@class='summaryBox__service__price']//input[@type='number']"))
@@ -144,11 +145,11 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 
 	}
 
-	public static void usingCreditsForBilling() throws InterruptedException, IOException {
-		customerPersonalDetails("8830175067", "Adding Credits");
+	public static void usingCreditsForBilling(String CustomerMobile) throws InterruptedException, IOException {
+		customerPersonalDetails(CustomerMobile, "Adding Credits");
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
-		
+
 		wait("//span[text()='Gold Ritual  ( FACIALS ) ']");
 		driver.findElement(By.xpath("//span[text()='Gold Ritual  ( FACIALS ) ']")).click();
 		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
@@ -273,6 +274,62 @@ public class Walkin_With_Credits extends Walkin_With_Individual_Discount {
 					+ " = " + availableCreditValue);
 			takeScreenshot("lessCreditValue.png");
 		}
+
+	}
+
+	public static void partialCreditAndPaidAmount(String CustomerMobile) throws InterruptedException, IOException {
+
+		customerPersonalDetails(CustomerMobile, "");
+
+		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
+		selectServiceDropDownlist.click();
+
+		wait("//span[text()='Skin Pearl Lightening  ( FACIALS ) ']");
+		driver.findElement(By.xpath("//span[text()='Skin Pearl Lightening  ( FACIALS ) ']")).click();
+		selectEmpDropDownList = driver.findElement(By.xpath("//select[@ng-reflect-name='employee']"));
+		selectEmpDropDownList.click();
+		driver.findElement(By.xpath("//*[text()=' Automation 3 ']")).click();
+		WebElement addSummary = driver.findElement(By.xpath("//button[@class='addSummary']"));
+		addSummary.click();
+
+		wait("//span[@class='summaryBox__grandTotal__value']");
+		String getActualPayable = driver.findElement(By.xpath("//span[@class='summaryBox__grandTotal__value']"))
+				.getText();
+
+		String payable = getActualPayable.trim().split(" ")[0];
+
+		double actPayable = Double.valueOf(payable);
+
+		wait("//div[@class='creditsIcon col-sm-6 p-30 m-0']//span[@class='creditsIcon__txt']");
+
+		String getGstAmount = driver.findElement(By.xpath("//span[@class='summaryBox__GST__money ']")).getText();
+		String actualGstAmt = getGstAmount.trim().split(" ")[0];
+		usedCredits = Double.valueOf(actualGstAmt);
+		paidAmount = actPayable - usedCredits;
+		wait("/html/body/app-dashboard/div/main/div/ng-component/div[3]/div[1]/div[2]/div/div[1]/div[2]/input");
+		driver.findElement(By.xpath(
+				"/html/body/app-dashboard/div/main/div/ng-component/div[3]/div[1]/div[2]/div/div[1]/div[2]/input"))
+				.sendKeys(actualGstAmt);
+
+		driver.findElement(
+				By.xpath("//div[@class='redeemCredits col-sm-6 p-0 m-0 ng-star-inserted']//button[@type='submit']"))
+				.click();
+
+		wait("//select[@ng-reflect-is-disabled='false']");
+
+		WebElement paymentMethod = driver.findElement(By.xpath("//select[@ng-reflect-is-disabled='false']"));
+
+		paymentMethod.click();
+
+		driver.findElement(By.xpath("//option[@ng-reflect-value='Cash']")).click();
+
+		driver.findElement(By.xpath("//button[text()='Submit']")).click();
+
+		wait("//button[text()='Create new walkin']");
+
+		System.out.println(" Congratulation !! Walk-in is created with partial cash and credit amount");
+
+		driver.findElement(By.xpath("//button[text()='Create new walkin']")).click();
 
 	}
 

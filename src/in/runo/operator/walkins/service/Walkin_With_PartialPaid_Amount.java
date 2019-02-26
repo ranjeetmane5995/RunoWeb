@@ -15,49 +15,10 @@ public class Walkin_With_PartialPaid_Amount extends Walkin_With_Individual_And_C
 		}
 	}
 
-	public static void verifyPartialPaidAmount(String CustomerNumber, String CustomerName)
+	public static void verifyPartialPaidAmount(String mobileNumber, String customerName)
 			throws InterruptedException, IOException {
 
-		wait("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']");
-
-		driver.findElement(By.xpath("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']"))
-				.sendKeys(CustomerNumber);
-
-		// Handling noSuchElementException for New Customer
-		try {
-
-			wait("//span[@class='search-result-number']");
-
-			if (driver.findElement(By.xpath("//span[@class='search-result-number']")) != null) {
-				driver.findElement(By.xpath("//span[@class='search-result-number']")).click();
-				System.out.println(" customer is  existing customer");
-			}
-		} catch (Exception c) {
-
-			wait("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']");
-			driver.findElement(
-					By.xpath("//input[@class='nice-textbox customerName ng-untouched ng-pristine ng-invalid']"))
-					.sendKeys(CustomerName);
-			driver.findElement(By.xpath("//input[@ng-reflect-name='email']")).sendKeys("automation@gmail.com");
-
-			WebElement selectDob = driver.findElement(By.xpath("//input[@ng-reflect-name='dob']"));
-
-			selectDob.click();
-
-			driver.findElement(By.xpath("//button[@class='previous']")).click();
-
-			driver.findElement(By.xpath("//span[text()='12']")).click();
-
-			driver.findElement(By.xpath("//div[text	()='Others']")).click();
-
-			driver.findElement(By.xpath("//input[@ng-reflect-name='locality']"))
-					.sendKeys("Sr No: 22/2, 2nd Floor Near Petrol Pump Bidar");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='city']")).sendKeys("Bidar");
-			driver.findElement(By.xpath("//input[@ng-reflect-name='pincode']")).sendKeys("410048");
-			driver.findElement(By.xpath("//input[@ng-reflect-name" + "='notes']"))
-					.sendKeys(" He is a regular customer ");
-		}
-
+		customerPersonalDetails(mobileNumber, customerName);
 		selectServiceDropDownlist = driver.findElement(By.xpath("//div[@class='ng-select-container']"));
 		selectServiceDropDownlist.click();
 		wait("//span[text()='Gold Ritual  ( FACIALS ) ']");
@@ -141,11 +102,11 @@ public class Walkin_With_PartialPaid_Amount extends Walkin_With_Individual_And_C
 		}
 	}
 
-	public static void verifyPastDueAmount(String CustomerNumber) throws IOException, InterruptedException {
+	public static void verifyPastDueAmount(String mobileNumber) throws IOException, InterruptedException {
 
 		wait("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']");
 		driver.findElement(By.xpath("//input[@class='nice-textbox mobileNumber ng-untouched ng-pristine ng-invalid']"))
-				.sendKeys(CustomerNumber);
+				.sendKeys(mobileNumber);
 
 		wait("//span[@class='search-result-number']");
 
@@ -164,12 +125,18 @@ public class Walkin_With_PartialPaid_Amount extends Walkin_With_Individual_And_C
 			addSummary = driver.findElement(By.xpath("//button[@class='addSummary']"));
 			addSummary.click();
 
+			wait("//span[@class='summaryBox__prevBal__value']");
 			String getActPastDue = driver.findElement(By.xpath("//span[@class='summaryBox__prevBal__value']"))
 					.getText();
 
 			double actPastDue = Double.valueOf(getActPastDue.trim().split(" ")[0]);
 			double expPastDue = expectedBalance;
 
+			String getBalanceValue = driver
+					.findElement(By.xpath("//span[@class='summaryBox__balance__value']")).getText();
+
+			actualBalanceValue = Double.valueOf(getBalanceValue.trim().split(" ")[0]);
+			
 			if (actPastDue == expPastDue) {
 				System.out.println(" Test Case Passes !! As Past Due amount is matched with expected Past Due Amount ");
 
